@@ -1,0 +1,53 @@
+ <!--           Pagina donde el usuario se registra-->
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Modificar Mi Perfil</h2>
+                <hr class="star-primary"> </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                
+                 <!--           Usuario coloca su informacion personal-->
+                
+                <form name="register">
+                    <div class="form-group">
+                        <label for="usr">Nombre:*</label>
+                        <input type="text" class="form-control" id="usr" ng-model="username" required> </div><br>
+                    <div class="form-group">
+                        <label for="usr">Email:*</label>
+                        <input type="text" class="form-control" id="usr" ng-model="username" required> </div><br>
+                    <div class="form-group">
+                        <label for="pwd">Contraseña:*</label>
+                        <input type="password" class="form-control" id="pwd" ng-model="password" required> </div><br>
+                    <div class="form-group">
+                        <label for="pwd">Confirmar contraseña:*</label>
+                        <input type="password" class="form-control" ng-change="checkConfirm()" name="confirmpassword" id="confirmpassword" ng-model="confirmpassword" required> </div> <br>
+                    <div class="form-group">
+                        <div class="form-group">
+                        <label for="usr">Escoger pregunta:*</label>
+                        <input type="text" class="form-control" id="usr" ng-model="username" required> </div><br>
+                    <div class="form-group">
+                        <label for="usr">Respuesta de la pregunta:*</label>
+                        <input type="text" class="form-control" id="usr" ng-model="username" required> </div>  <br>
+                    <div class="form-group">
+                        <label for="usr">Pueblo:*</label>
+                        <input type="text" class="form-control" id="usr" ng-model="username" required> </div>  <br>
+                    <div class="form-group">
+                        <label for="usr">Agencia para la que trabaja:</label>
+                        <input type="text" class="form-control" id="usr" ng-model="username" required> </div>  <br>
+                  
+                        
+                          <button type="button" ng-disabled="notMatch || register.$invalid" class="btn btn-success" ng-click="registrarse()">Cambiar Contrasena</button>
+                        
+                        <button type="button" ng-disabled="notMatch || register.$invalid" class="btn btn-success" ng-click="registrarse()"> Guardar</button>
+                        <!--           Pagina donde el usuario se registra-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
