@@ -43,14 +43,7 @@ siteNo int references Rivers(riverNumber) not null, --
 dateTimeUSGS date not null, -- time?
 paramStatDesc float not null,
 paramStatDesc_cd varchar(100),
---date date, --
---year int, --
---month int, --
---day int --
---Day_365,
---Day_30,
---Month,
---year
+calendarDay int, --IMPORTANT
 sevenDaysAVG_Flow float,
 oneMonthAVG_Flow float,
 threeMonthsAVG_Flow float,
@@ -65,29 +58,7 @@ oneYearPER float
 primary key(riverID,usgsID)
 );
 
-/* create table RiversAVG(
-riverID bigserial primary key references Rivers(riverID) not null,
-avgID bigserial primary key not null,
-sevenDaysAVG float,
-oneMonthAVG float,
-threeMonthsAVG float,
-sixMonthsAVG float,
-nineMonthsAVG float,
-oneYearAVG float
-); */
-
-/* create table RiversPercentile(
-riverID bigserial primary key references Rivers(riverID) not null,
-perID bigserial primary key not null,
-percentile float,
-flow float,
-oneMonthPER float,
-threeMonthsPER float,
-sixMonthsPER float,
-nineMonthsPER float,
-oneYearPER float
-); */
-
+--ARREGLAR!
 create table RiversPercentile(
 riverID bigserial primary key references Rivers(riverID) not null,
 catID bigserial primary key not null,
@@ -102,30 +73,42 @@ oneYearCAT varchar(20)
 create table WaterReservoirs(
 reservoirID bigserial primary key not null,
 reservoirName varchar(100),
+constructionYear int,
+mostRecentStudyforSedimentation int,
+reservoirLength_m float,
+spillwayElevation_m_msl float,
+originalCapacity_Mm3 float,
+normalOperationalLevel_m float,
+storageVolume float,
+deadVolume_Mm3 float,
+activeVolume_Mm3 float,
+levelat25PercentofVolume_m float,
+at25PercentofVolume_Mm3 float
 normalOperationalLevel_ft float,
 reasoningApproximateLevel_m_msl float,
 reasoningApproximateLevel_ft float,
-actualLevel float,--
-uniqueID int,
+actualLevel_ft float,--
+--uniqueID int,
 );
 
 create table WaterReservoirsLevel(
 reservoirID bigserial primary key references WaterReservoirs(reservoirID) not null,
 reservoirLevelID bigserial primary key not null,
-reservoirLevel float,
-volume_m3 float,
+volume_Mm3 float,
 volume_percent float,
-date date --
+level_m float, 
+volume_m3 float,
+date date
 );
 
 create table Aquifers(
 aquiferID bigserial primary key not null,
-aquiferName varchar(100),
-terrainLevelCAT float, --
-optimalConditionCAT float, --
-observationCAT float, --
+aquiferName varchar(100), 
+terrainLevelCAT float(10), --
+optimalConditionCAT float(10), --
+observationCAT float), --
 controlsAndAdjustmentsCAT float, --
-criticsCAT float, --
+criticCAT float --
 );
 
 create table AquifersLevel(
@@ -133,8 +116,8 @@ aquiferID bigserial primary key references Aquifers(aquiferID) not null,
 aquiferLevelID bigserial primary key not null,
 aquiferLevel float, --
 changesInTime float, --
-monitoringStation varchar(100), --
-city varchar(50)
+monitoringStation varchar(100), --está (sitenumber)
+--city varchar(50) --
 );
 
 create table ReservesAndShelters(
