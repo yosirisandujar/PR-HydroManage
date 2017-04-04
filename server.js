@@ -14,30 +14,10 @@ app.listen(app.get('port'), function () {
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/register.html'));
+	console.log("path success");
 });
 
-
-/************************
-var promise = require('bluebird');
-
-var options = {
-  // Initialization Options
-  promiseLib: promise
-};
-
-var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://hbqxopcdqtxvib:b3d37a4e79be99a437b33c89abc5010712ed5b81780ad5739d1c083a6af4be53@ec2-54-225-236-102.compute-1.amazonaws.com:5432/d6fok6bbulj28q';
-var db = pgp(connectionString);
-*///************************
-//var fs = require("fs");
-
-//var pg, client, query, conString;
-
-//function clientConnect(){
-//	pg = require('pg');
-	
-/*
-var config = {
+/*var config = {
   user: 'postgres', //env var: PGUSER
   database: 'prHydroManage', //env var: PGDATABASE
   password: 'xxxxxxxxxx', //env var: PGPASSWORD
@@ -63,7 +43,7 @@ clientConnect();
 var request = require("request"),
   cheerio = require("cheerio"),
   //URL for USGS river data 
-  url = "https://waterdata.usgs.gov/pr/nwis/uv?cb_00060=on&cb_00065=on&format=rdb&site_no=50147800&period=2H";
+  url = "https://waterdata.usgs.gov/pr/nwis/uv?cb_00060=on&cb_00065=on&format=rdb&site_no=50147800&period=1D";
   
 
   //Request function which loads the HTML body from the URL

@@ -1,3 +1,7 @@
+--drop all tables
+drop table person, administrator, users, Rivers, RiversUSGS, WaterReservoirs, WaterReservoirsLevel, Aquifers, AquifersLevel, ReservesAndShelters, ReservesForm
+
+--Create all tables
 create table person(
 personID bigserial unique not null,
 email varchar(100) not null,
@@ -37,7 +41,7 @@ create table RiversUSGS(
 riverID bigserial references Rivers(riverID) not null,
 usgsID bigserial not null,
 agencyCd varchar (10) default 'usgs',
-siteNo int references Rivers(riverNumber) not null, --
+siteNo int references Rivers(station) not null, --
 dateTimeUSGS date not null, -- time?
 paramStatDesc float not null,
 calendarDay int, --IMPORTANT
