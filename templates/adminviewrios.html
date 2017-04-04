@@ -1,14 +1,14 @@
 <section id="adminView">
     <h1>Administrador</h1>
     <div ng-init="adminViewOwner()">
-        <h3>Favor de seleccionar un rio</h3> </div> <span class="help-block"></span>
+        <h3>Favor de seleccionar un Rios</h3> </div> <span class="help-block"></span>
     <br>
     <br>
     <div class="container">
-    <div  ng-repeat="business_profile  in uprmeshipplatform" ng-click="adminViewBusiness()">
+    <div  ng-repeat="rios  in neoNatureCode" ng-click="adminViewRivers()">
         <div class="thumbnail">
-            <h5 ng-click= "help(business_profile)" class="caption">
-        {{business_profile.name}}
+            <h5 ng-click= "help(aquifer)" class="caption">
+        {{rios.name}}
         </h5> </div>
     </div>
     </div>
