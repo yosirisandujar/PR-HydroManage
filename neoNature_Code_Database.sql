@@ -33,7 +33,7 @@ riverID bigserial unique primary key not null,
 riverName varchar(100),
 riverNumber int unique,
 region varchar(5),
-station int,
+station int unique,
 description varchar(100)
 );
 
@@ -59,24 +59,11 @@ oneYearPER float,
 primary key(riverID,usgsID)
 );
 
---ARREGLAR!
---create table RiversPercentile(
---riverID bigserial primary key references Rivers(riverID) not null,
---catID bigserial primary key not null,
---category float,--
---oneMonthCAT varchar(20),
---threeMonthsCAT varchar(20),
---sixMonthsCAT varchar(20),
---nineMonthsCAT varchar(20),
---oneYearCAT varchar(20),
---primary key(riverID,catID)
---);
-
 create table WaterReservoirs(
 reservoirID bigserial primary key not null,
 reservoirName varchar(100),
-constructionYear int,
-mostRecentStudyforSedimentation int,
+constructionYear int, --
+mostRecentStudyforSedimentation int, --
 reservoirLength_m float,
 spillwayElevation_m_msl float,
 originalCapacity_Mm3 float,
@@ -119,8 +106,7 @@ aquiferID bigserial references Aquifers(aquiferID) not null,
 aquiferLevelID bigserial not null,
 aquiferLevel float, --
 changesInTime float, --
-monitoringStation varchar(100), --está (sitenumber)
---city varchar(50) --
+monitoringStation int, --(sitenumber)
 primary key(aquiferID,aquiferLevelID)
 );
 
