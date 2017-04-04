@@ -10,19 +10,19 @@
                 <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                 <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
                 <div class="form-group">
-                    <label for="usr">Pregunta:</label>
-                    <input type="text" class="form-control" id="usr" ng-model="username"> </div> <br>
+                    <label for="usr">Pregunta*:</label>
+                    <input type="text" class="form-control" id="usr" ng-model="pregunta" required> </div> <br>
                  <div class="form-group">
-                    <label for="usr">Respuesta a la pregunta:</label>
-                    <input type="text" class="form-control" id="usr" ng-model="username"> </div> <br>
+                    <label for="usr">Respuesta a la pregunta*:</label>
+                    <input type="text" class="form-control" id="usr" ng-model="respuesta" required> </div> <br>
                  <div class="form-group">
-                    <label for="usr">Nueva Contraseña:</label>
-                    <input type="text" class="form-control" id="usr" ng-model="username"> </div> <br>
+                    <label for="usr">Nueva Contraseña*:</label>
+                    <input type="text" class="form-control" id="usr" ng-model="newpass" required> </div> <br>
                 <div class="form-group">
-                    <label for="pwd">Confirmar Contraseña:</label>
-                    <input type="password" class="form-control" id="pwd" ng-model="password"> </div><br>
+                    <label for="pwd">Confirmar Contraseña*:</label>
+                    <input type="password" class="form-control" id="pwd" ng-model="confirm" required> </div><br>
                 <div class="form-group">
-                    <button type="button" class="btn btn-success" ng-click="login()">Grabar</button>
+                    <button type="button" class="btn btn-success" ng-click="save()">Grabar</button>
         <br>
                 </div>
             </div>

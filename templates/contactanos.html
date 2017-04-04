@@ -10,13 +10,13 @@
                 <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                 <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
                 <div class="form-group">
-                    <label for="usr">Nombre de Usuario:</label>
-                    <input type="text" class="form-control" id="usr" ng-model="username"> </div> <br>
+                    <label for="usr">Nombre:</label>
+                    <input type="text" class="form-control" id="usr" ng-model="nombre" required> </div> <br>
                 <div class="form-group">
-                    <label for="pwd">Contraseña:</label>
-                    <input type="password" class="form-control" id="pwd" ng-model="password"> </div><br>
+                    <label for="pwd">Comentario:</label>
+                    <input type="comment" class="form-control" id="pwd" ng-model="comment" required> </div><br>
                 <div class="form-group">
-                    <button type="button" class="btn btn-success" ng-click="login()">Enviar</button>
+                    <button type="button" class="btn btn-success" ng-click="enviar()">Enviar</button>
         <br>
                 </div>
             </div>
