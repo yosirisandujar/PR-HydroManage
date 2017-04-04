@@ -1,0 +1,31 @@
+<section id="usDRNA">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Cambiar Contraseña</h2>
+                <hr class="star-primary"> </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                <div class="form-group">
+                    <label for="usr">Pregunta*:</label>
+                    <input type="text" class="form-control" id="usr" ng-model="pregunta" required> </div> <br>
+                 <div class="form-group">
+                    <label for="usr">Respuesta a la pregunta*:</label>
+                    <input type="text" class="form-control" id="usr" ng-model="respuesta" required> </div> <br>
+                 <div class="form-group">
+                    <label for="usr">Nueva Contraseña*:</label>
+                    <input type="text" class="form-control" id="usr" ng-model="newpass" required> </div> <br>
+                <div class="form-group">
+                    <label for="pwd">Confirmar Contraseña*:</label>
+                    <input type="password" class="form-control" id="pwd" ng-model="confirm" required> </div><br>
+                <div class="form-group">
+                    <button type="button" class="btn btn-success" ng-click="save()">Grabar</button>
+        <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br> </section>

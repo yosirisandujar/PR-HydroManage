@@ -1,0 +1,79 @@
+<section id="owner_profile">
+    <div class="required">
+        <div class="container">
+            <h1>Perfil del Usuario</h1> <a href="#user" class="btn btn-info" role="button">Ver Mi Perfil</a>
+            <br>
+            <br> <a href="#user_editar" class="btn btn-info" role="button">Modificar Perfil</a>
+            <br>
+            <h4>Campo requerido *</h4> </div>
+        <div class="container">
+            <div class="container">
+                <label for="inputsm">Nombre *:</label>
+                <input type="text" class="form-control" placeholder="Nombre" id="nombre" required data-validation-required-message="Please enter your name." ng-model="name">
+                <p class="help-block text-danger"></p>
+                <br> </div>
+        </div>
+        <div class="container">
+            <div class="container">
+                <label for="pwd">Apellido *:</label>
+                <input type="text" class="form-control" placeholder="Apellido" id="apellido" required data-validation-required-message="Please enter your last name." ng-model="lastname">
+                <p class="help-block text-danger"></p>
+                <br> </div>
+        </div>
+        <div class="container">
+            <div class="container">
+                <label>Pueblo *:</label>
+                <input type="text" class="form-control" placeholder="Edad" id="edad" required data-validation-required-message="Please enter your name." ng-model="age">
+                <p class="help-block text-danger"></p>
+                <br> </div>
+        </div>
+        <div class="container">
+            <div class="container">
+                <label>Email *: </label>
+                <input type="email" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter a valid email address." ng-model="email">
+                <p class="help-block text-danger"></p>
+                <br> </div>
+        </div>
+        <div class="container">
+            <div class="container">
+                <label>Pregunta Secreta*:</label>
+               
+    <!--<input type="integer" ng-model="secretQuestion"><br>-->
+	<select ng-model="secretQuestion">
+    <option value="1" selected>Nombre de la primer mascota</option>
+    <option value="2">Nombre de la ciudad donde nació</option>
+    <option value="3">Marca de su primer vehículo</option>
+    <option value="4">Color preferido</option>
+    <option value="5">Comida preferida</option>
+    <option value="6">Segundo apellido de su madre</option>
+	</select><br>                 
+<!--
+                <input type="tel" class="form-control" placeholder="questionr" id="question" required data-validation-required-message="Please select a question." ng-model="question">
+                <p class="help-block text-danger"></p>
+-->
+            </div>
+        </div>
+        <div class="container"><br>
+            <div class="container">
+                <label>Agencia para la cual trabaja: </label>
+                <br>
+                <textarea rows="5" ng-model="postal" class="form-control" placeholder="Direccion" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+              <button type="button" ng-disabled="notMatch || register.$invalid" class="btn btn-success" ng-click="registrarse()">Cambiar Contrasena</button>
+                        
+                        <button type="button" ng-disabled="notMatch || register.$invalid" class="btn btn-success" ng-click="registrarse()"> Guardar</button>
+
+        <footer>Copyright © Silver Entrepreneur</footer>
+    </div>
+    <h5> * Campos requeridos</h5>
+    <!--   <p>Te faltan campos por llenar</p>
+       
+    <style>
+        .required:after {
+            content: " *";
+        }
+    </style>​-->
+</section>
+                    

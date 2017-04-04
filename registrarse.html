@@ -1,0 +1,70 @@
+<!--           Pagina donde el usuario se registra-->
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Mi perfil - Registrarse</h2>
+                <hr class="star-primary"> </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                <!--           Usuario coloca su informacion personal-->
+                <form name="register">
+                    <div class="form-group">
+                        <label for="usr">Nombre:*</label>
+                        <input type="text" class="form-control" id="usr" ng-model="username" required> </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="usr">Email:*</label>
+                        <input type="text" class="form-control" id="usr" ng-model="username" required> </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="pwd">Contraseña:*</label>
+                        <input type="password" class="form-control" id="pwd" ng-model="password" required> </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="pwd">Confirmar contraseña:*</label>
+                        <input type="password" class="form-control" ng-change="checkConfirm()" name="confirmpassword" id="confirmpassword" ng-model="confirmpassword" required> </div>
+                    <br>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="usr">Escoger pregunta secreta:*</label>
+                            <!--<input type="integer" ng-model="secretQuestion"><br>-->
+                            <select ng-model="secretQuestion">
+                                <option value="1" selected>Nombre de la primer mascota</option>
+                                <option value="2">Nombre de la ciudad donde nació</option>
+                                <option value="3">Marca de su primer vehículo</option>
+                                <option value="4">Color preferido</option>
+                                <option value="5">Comida preferida</option>
+                                <option value="6">Segundo apellido de su madre</option>
+                            </select>
+                            <br>
+                            <div class="container">
+                                <br>
+                                <div class="container">
+                                    <label>Agencia para la cual trabaja: </label>
+                                    <br>
+                                    <textarea rows="5" ng-model="postal" class="form-control" placeholder="Direccion" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <button type="button" ng-disabled="notMatch || register.$invalid" class="btn btn-success" ng-click="registrarse()">Registrarse</button>
+                            <footer>Copyright © Silver Entrepreneur</footer>
+                        </div>
+                        <h5> * Campos requeridos</h5>
+                        <!--   <p>Te faltan campos por llenar</p>
+       
+    <style>
+        .required:after {
+            content: " *";
+        }
+    </style>​-->
+                        <!--           Pagina donde el usuario se registra-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
