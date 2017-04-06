@@ -2,17 +2,17 @@
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="server.js"></script>
-<script src="controllers.js"></script>
+<!-- <script src="controllers.js"></script>-->
 <body>
 
 <div ng-app="myApp" ng-controller="formCtrl">
   <form novalidate>
     Email:<br>
-    <input type="text" ng-model="user.email"><br>
+    <input type="text" ng-model="email"><br>
     Password:<br>
-    <input type="text" ng-model="user.password"><br>
+    <input type="text" ng-model="password"><br>
 	Confirm Password:<br>
-    <input type="text" ng-model="user.confirmPassword"><br>
+    <input type="text" ng-model="confirmPassword"><br>
 	Secret Question:<br>
     <!--<input type="integer" ng-model="secretQuestion"><br>-->
 	<select ng-model="secretQuestion">
@@ -24,14 +24,14 @@
     <option value="6">Segundo apellido de su madre.</option>
 	</select><br> 
 	Secret Answer:<br>
-    <input type="text" ng-model="user.secretAnswer"><br>
+    <input type="text" ng-model="secretAnswer"><br>
     <br><br>
-    <button type="submit" ng-click="register(user)">Register</button>
+    <button type="submit" ng-click="register()">Register</button>
   </form>
 </div>
 
 
-<!-- <script>
+<script>
 var app = angular.module('myApp', []);
 app.controller('formCtrl', function($scope, $http) {
 
@@ -55,7 +55,7 @@ app.controller('formCtrl', function($scope, $http) {
 		
     };
 });
-</script> -->
+</script>
 
 </body>
 </html>

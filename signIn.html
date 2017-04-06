@@ -1,1 +1,47 @@
-<script src="js/controller.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.div2{
+background-color: #D6DBDF;
+margin: 2%
+}
+
+div {
+    border: none;
+	padding:10px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    margin-right: 20%;
+    margin-left: 20%;
+    background-color: #F7F7F7;
+}
+
+body{
+background-color: #F2F2F2;
+}
+</style>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="server.js"></script>
+<script src="controllers.js"></script>
+
+<body ng-app="myApp" ng-controller="signInCtrl">
+<div class="div2">
+
+<div ng-app="myApp" ng-controller="formCtrl">
+  <form novalidate>
+    Email:<br>
+    <input type="text" ng-model="email"><br>
+    Password:<br>
+    <input type="text" ng-model="password"><br>
+    <br><br>
+	<a onclick="window.location.href='/to/forgotpassword'"></a>
+	<br>
+    <button style="height:30px;width:24%;background-color:#1E90FF;color:white" type="submit" ng-click="signIn()">Register</button>
+  </form>
+</div>
+
+
+</body>
+</html>
