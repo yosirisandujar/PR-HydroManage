@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <style>
 .div2{
@@ -22,26 +22,64 @@ background-color: #F2F2F2;
 }
 </style>
 </head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> <!--home button library-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <!--home button link-->
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="server.js"></script>
 <script src="controllers.js"></script>
 
-<body ng-app="myApp" ng-controller="signInCtrl">
-<div class="div2">
+<body >
 
-<div ng-app="myApp" ng-controller="formCtrl">
+<p><button style="height:40px;width:40px;background-color:#1E90FF;color:white" type="button" onclick="window.location.href='/to/homepage'"><i class="material-icons">home</i></button></p>
+
+<div ng-app="myApp" ng-controller="signInCtrl">
+  
   <form novalidate>
     Email:<br>
     <input type="text" ng-model="email"><br>
     Password:<br>
     <input type="text" ng-model="password"><br>
     <br><br>
-	<a onclick="window.location.href='/to/forgotpassword'"></a>
+	<a href="/to/forgotpassword">Olvido su contraseña?</a>.
 	<br>
-    <button style="height:30px;width:24%;background-color:#1E90FF;color:white" type="submit" ng-click="signIn()">Register</button>
+    <button style="height:30px;width:24%;background-color:#1E90FF;color:white" type="submit" ng-click="signIn()">Iniciar Sesion</button>
   </form>
 </div>
 
+<script>
+var app = angular.module('myApp', []);
+app.controller('signInCtrl', function($scope, $http, $window) {
+
+
+    $scope.signIn = function() {
+						console.log('inside register fn');
+						console.log($scope.email);
+
+                        $http({method: 'GET',
+						url : "/db/get/person/"+$scope.email+""
+						}).success(function(data, status) {  
+                                    $scope.dataset = data;
+									console.log(data[0].personid)
+									
+									$scope.userInSystemEmail=data[0].email; //
+									$scope.userInSystemPassword=data[0].password; //
+									console.log("user from get "+$scope.userInSystemPassword) //
+								
+					if($scope.password!=$scope.userInSystemPassword)//
+					  {
+						console.log("password not the same")
+					  }
+                            }).
+                        error(function(data, status) {
+                          $scope.dataset = data || "Request failed "; 
+						  console.log(dataset);
+                      });
+					  
+		
+    };
+});
+</script>
 
 </body>
 </html>
