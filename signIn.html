@@ -39,11 +39,12 @@ background-color: #F2F2F2;
     Email:<br>
     <input type="text" ng-model="email"><br>
     Password:<br>
-    <input type="text" ng-model="password"><br>
+    <input type="password" ng-model="password"><br>
+	<font color="red">{{message}}</font>
     <br><br>
 	<a href="/to/forgotpassword">Olvido su contraseña?</a>.
 	<br>
-    <button style="height:30px;width:24%;background-color:#1E90FF;color:white" type="submit" ng-click="signIn()">Iniciar Sesion</button>
+    <button style="height:30px;width:24%;background-color:#1E90FF;color:white" type="submit" ng-click="verify()">Iniciar Sesion</button>
   </form>
 </div>
 
@@ -51,25 +52,60 @@ background-color: #F2F2F2;
 var app = angular.module('myApp', []);
 app.controller('signInCtrl', function($scope, $http, $window) {
 
+$scope.message=""
+
+	$scope.verify =function()  {
+	
+	
+							$http({method: 'GET',
+						url : "/db/get/person"
+						}).success(function(data, status) {  
+                                    //$scope.emailInDataBase = data.email;
+							for(x in data){
+								if(data[x].email == $scope.email){
+								console.log("USER HERE")
+								$scope.signIn()
+								}
+								else{
+								console.log("USER NOT HERE")
+								$scope.message="Correo Electronico no existe*"
+								
+								}
+							}
+								});	
+	
+	
+	
+	}
 
     $scope.signIn = function() {
 						console.log('inside register fn');
 						console.log($scope.email);
 
+
                         $http({method: 'GET',
 						url : "/db/get/person/"+$scope.email+""
 						}).success(function(data, status) {  
                                     $scope.dataset = data;
-									console.log(data[0].personid)
+							
+									//console.log(data[0].personid)
 									
 									$scope.userInSystemEmail=data[0].email; //
 									$scope.userInSystemPassword=data[0].password; //
 									console.log("user from get "+$scope.userInSystemPassword) //
 								
-					if($scope.password!=$scope.userInSystemPassword)//
+					if(!$scope.password){
+						$scope.message="Inserte Contraseña*"
+					}
+					else if($scope.password!=$scope.userInSystemPassword)//
 					  {
+						$scope.message="Contraseña Incorrecta*";
 						console.log("password not the same")
 					  }
+					  
+					else{
+						$scope.message=""
+					}
                             }).
                         error(function(data, status) {
                           $scope.dataset = data || "Request failed "; 
