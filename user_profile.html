@@ -1,48 +1,112 @@
-<section id="owner_profile">
-    <div class="required">
-        <div class="container">
-            <h1>Perfil del Usuario</h1> <a href="#user" class="btn btn-info" role="button">Ver Mi Perfil</a>
-            <br>
-            <br> <a href="#user_editar" class="btn btn-info" role="button">Modificar Perfil</a>
-            <br>
-            <h4>Campo requerido *</h4> </div>
-        <div class="container">
-            <div class="container">
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.div2{
+background-color: #D6DBDF;
+margin: 2%
+}
+
+div {
+    border: none;
+	padding:10px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    margin-right: 20%;
+    margin-left: 20%;
+    background-color: #F7F7F7;
+}
+
+body{
+background-color: #F2F2F2;
+}
+</style>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="server.js"></script>
+<script src="controllers.js"></script>
+
+<body ng-app="myApp" ng-controller="homeCtrl">
+<div class="div2">
+
+<div><h1 color="blue"><center><font color="1E90FF" size="40%" >Puerto Rico HydroManage</font></center></h1></div>
+
+
+</div>
+
+<center>
+
+<!-- <button style="height:50px;width:24%;background-color:gray;color:white" type="button" onclick="window.location.href='/to/informacion'" ><h3>Informacion</h3></button> -->
+<button style="height:50px;width:24%;background-color:gray;color:white" type="button" onclick="window.location.href='/to/dashboard'"><h3>Regresar</h3></button>
+<!-- <button style="height:50px;width:24%;background-color:#1E90FF;color:white" type="button"onclick="window.location.href='/to/user_profile'"><h3>Mi Perfil</h3></button>  -->
+<button style="height:50px;width:24%;background-color:#52D017;color:white" type="button" onclick="window.location.href='/to/logOut'"><h3>Salir</h3></button></center>
+<br><br><br>
+
+<!-- 
+<center>
+<button style="height:150px;width:20%;background-color:#1E90FF;color:white;border-radius: 5%" type="button" onclick="window.location.href='/to/viewRios'" ><h2>Rios<br></h2></button>
+<button style="height:150px;width:20%;background-color:#1E90FF;color:white;border-radius: 5%;" type="button" onclick="window.location.href='/to/viewEmbalses'"><h2>Embalses<br></h2></button>
+<button style="height:150px;width:20%;background-color:#1E90FF;color:white;border-radius: 5%;" type="button" onclick="window.location.href='/to/viewAquifers'"><h2>Acuiferos<br></h2></button>
+<button style="height:150px;width:20%;background-color:#1E90FF;color:white;border-radius: 5%;" type="button" onclick="window.location.href='/to/viewReservesandShelters'"><h2>Reservas y Refugios</h2></button></center>
+ -->
+<!--"height:50px;width:24%;background-color:#1E90FF;color:white"-->
+<br>
+<!-- <script>
+var app = angular.module('myApp', []);
+app.controller('homeCtrl', function($scope, $http) {
+
+
+    $scope.toRegister = function() {
+						//console.log('inside register fn');
+						//console.log($scope.secretQuestion);
+
+                        $http({method: 'GET',
+						url : "/toregister"
+						}).success(function(data, status) {  
+                                    $scope.dataset = data;
+                            }).
+                        error(function(data, status) {
+                          $scope.dataset = data || "Request failed "; 
+						  console.log(dataset);
+                      }); 	
+		
+    };
+
+});
+</script> -->
+<center>
+<!-- <section id="owner_profile"> <div class="required"> -->
+<div><h1 color="blue"><center><font color="1E90FF" size="40%" >Mi Perfil</font></center></h1>
+
+        
+<button style="height:55px;width:50%;background-color:gray;color:white" type="button" onclick="window.location.href='/to/user_editar'" ><h3>Modificar Perfil</h3></button>
+    
+            <h4>Campo requerido *</h4> 
+            
                 <label for="inputsm">Nombre *:</label>
                 <input type="text" class="form-control" placeholder="Nombre" id="nombre" required data-validation-required-message="Please enter your name." ng-model="name">
                 <p class="help-block text-danger"></p>
-                <br> </div>
-        </div>
-        <div class="container">
-            <div class="container">
+                 
                 <label for="pwd">Apellido *:</label>
                 <input type="text" class="form-control" placeholder="Apellido" id="apellido" required data-validation-required-message="Please enter your last name." ng-model="lastname">
                 <p class="help-block text-danger"></p>
-                <br> </div>
-        </div>
-        <div class="container">
-            <div class="container">
+                
                 <label>Pueblo *:</label>
                 <input type="text" class="form-control" placeholder="Edad" id="edad" required data-validation-required-message="Please enter your name." ng-model="age">
                 <p class="help-block text-danger"></p>
-                <br> </div>
-        </div>
-        <div class="container">
-            <div class="container">
+                 
+           
                 <label>Email *: </label>
                 <input type="email" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter a valid email address." ng-model="email">
                 <p class="help-block text-danger"></p>
-                <br> </div>
-        </div>
-        <div class="container">
-            <div class="container">
+                            
                 <label>Pregunta Secreta*:</label>
                
     <!--<input type="integer" ng-model="secretQuestion"><br>-->
 	<select ng-model="secretQuestion">
     <option value="1" selected>Nombre de la primer mascota</option>
-    <option value="2">Nombre de la ciudad donde nació</option>
-    <option value="3">Marca de su primer vehículo</option>
+    <option value="2">Nombre de la ciudad donde nacio</option>
+    <option value="3">Marca de su primer vehiculo</option>
     <option value="4">Color preferido</option>
     <option value="5">Comida preferida</option>
     <option value="6">Segundo apellido de su madre</option>
@@ -51,19 +115,22 @@
                 <input type="tel" class="form-control" placeholder="questionr" id="question" required data-validation-required-message="Please select a question." ng-model="question">
                 <p class="help-block text-danger"></p>
 -->
-            </div>
-        </div>
-        <div class="container"><br>
-            <div class="container">
-                <label>Agencia para la cual trabaja: </label>
-                <br>
-                <textarea rows="5" ng-model="postal" class="form-control" placeholder="Direccion" id="message" required data-validation-required-message="Please enter a message."></textarea>
+<br>
+            <label>Respuesta a la pregunta *: </label>
+                <input type="respuesta"  class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter a valid answer." ng-model="respuesta">
                 <p class="help-block text-danger"></p>
-            </div>
+    <br>                        
+                <label>Agencia para la cual trabaja: </label>
+               
+                <textarea rows="2" ng-model="agencia" class="form-control" placeholder="Agencia" id="message" required data-validation-required-message="Please enter a agency."></textarea>
+                <p class="help-block text-danger"></p>
+       
+        <button style="height:55px;width:45%;background-color:red;color:white" type="button" onclick="window.location.href='/to/change_password'" ><h3>Cambiar Contrasena</h3></button>
+<br>
+	   
+		        <button style="height:55px;width:45%;background-color:blue;color:white" type="button" onclick="window.location.href='/to/dashboard'" ><h3>Grabar</h3></button>
+<br>
         </div>
-        <footer>Copyright © Silver Entrepreneur</footer>
-    </div>
-    <h5> * Campos requeridos</h5>
     <!--   <p>Te faltan campos por llenar</p>
        
     <style>
@@ -71,4 +138,8 @@
             content: " *";
         }
     </style>​-->
-</section>
+<!-- </section> -->
+</body>
+</html>
+
+

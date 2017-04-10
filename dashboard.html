@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.div2{
+background-color: #D6DBDF;
+margin: 2%
+}
+
+div {
+    border: none;
+	padding:10px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    margin-right: 20%;
+    margin-left: 20%;
+    background-color: #F7F7F7;
+}
+
+body{
+background-color: #F2F2F2;
+}
+</style>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="server.js"></script>
+<script src="controllers.js"></script>
+
+<body ng-app="myApp" ng-controller="homeCtrl">
+<div class="div2">
+
+<div><h1 color="blue"><center><font color="1E90FF" size="40%" >Puerto Rico HydroManage</font></center></h1></div>
+
+
+</div>
+
+<center>
+
+
+<button style="height:50px;width:24%;background-color:gray;color:white" type="button" onclick="window.location.href='/to/informacion'" ><h3>Informacion</h3></button>
+<button style="height:50px;width:24%;background-color:gray;color:white" type="button" onclick="window.location.href='/to/contactanos'"><h3>Contactanos</h3></button>
+<button style="height:50px;width:24%;background-color:#1E90FF;color:white" type="button"onclick="window.location.href='/to/user_profile'"><h3>Mi Perfil</h3></button> 
+<button style="height:50px;width:24%;background-color:#52D017;color:white" type="button" onclick="window.location.href='/to/logOut'"><h3>Salir</h3></button></center>
+<br><br><br>
+
+
+
+<center>
+<button style="height:150px;width:20%;background-color:#1E90FF;color:white;border-radius: 5%" type="button" onclick="window.location.href='/to/viewRios'" ><h2>Rios<br></h2></button>
+<button style="height:150px;width:20%;background-color:#1E90FF;color:white;border-radius: 5%;" type="button" onclick="window.location.href='/to/viewEmbalses'"><h2>Embalses<br></h2></button>
+<button style="height:150px;width:20%;background-color:#1E90FF;color:white;border-radius: 5%;" type="button" onclick="window.location.href='/to/viewAquifers'"><h2>Acuiferos<br></h2></button>
+<button style="height:150px;width:20%;background-color:#1E90FF;color:white;border-radius: 5%;" type="button" onclick="window.location.href='/to/viewReservesandShelters'"><h2>Reservas y Refugios</h2></button></center>
+
+<!--"height:50px;width:24%;background-color:#1E90FF;color:white"-->
+<br><br><br><br>
+
+
+<!-- <script>
+var app = angular.module('myApp', []);
+app.controller('homeCtrl', function($scope, $http) {
+
+
+    $scope.toRegister = function() {
+						//console.log('inside register fn');
+						//console.log($scope.secretQuestion);
+
+                        $http({method: 'GET',
+						url : "/toregister"
+						}).success(function(data, status) {  
+                                    $scope.dataset = data;
+                            }).
+                        error(function(data, status) {
+                          $scope.dataset = data || "Request failed "; 
+						  console.log(dataset);
+                      }); 	
+		
+    };
+
+});
+</script> -->
+
+</body>
+</html>
