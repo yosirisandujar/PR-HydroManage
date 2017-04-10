@@ -28,13 +28,13 @@ background-color: #F2F2F2;
 
 <div ng-app="myApp" ng-controller="formCtrl">
   <form novalidate>
-    Correo electronico:<br>
+    Correo electronico: <font color="red">* {{message1}}</font><br>
     <input type="text" ng-model="email"><br>
-    Contraseña:<br>
+    Contraseña: <font color="red">* {{message2}}</font><br>
     <input type="text" ng-model="password"><br>
-	Confirmar contraseña:<br>
+	Confirmar contraseña: <font color="red">* {{message3}}</font><br>
     <input type="text" ng-model="confirmPassword"><br>
-	Pregunta secreta:<br>
+	Pregunta secreta: <font color="red">* {{message4}}</font><br>
     <!--<input type="integer" ng-model="secretQuestion"><br>-->
 	<select ng-model="secretQuestion">
     <option value="1" selected>Nombre de la primer mascota.</option>
@@ -44,14 +44,15 @@ background-color: #F2F2F2;
     <option value="5">Comida preferida.</option>
     <option value="6">Segundo apellido de su madre.</option>
 	</select><br> 
-	Respuesta secreta:<br>
+	Respuesta secreta: <font color="red">* {{message5}}</font><br>
     <input type="text" ng-model="secretAnswer"><br>
 	Agencia:<br>
     <input type="text" ng-model="organization"><br>
-	Ciudad:<br>
-    <input type="text" ng-model="city"><br>
-    <br><br>
-    <button style="height:30px;width:24%;background-color:#1E90FF;color:white" type="submit" ng-click="register()">Registrarse</button>
+	Ciudad: <font color="red">* {{message6}}</font><br>
+    <input type="text" ng-model="city"><br><br>
+	<font color="red">* required</font><br><br>
+	
+    <button style="height:30px;width:24%;background-color:#1E90FF;color:white" type="submit" ng-click="verify()">Registrarse</button>
   </form>
 </div>
 
@@ -59,11 +60,76 @@ background-color: #F2F2F2;
 <script>
 var app = angular.module('myApp', []);
 app.controller('formCtrl', function($scope, $http, $window) {
-
+	
+	//$scope.message1=""
+	//$scope.message2=""
+	//$scope.message3=""
+	
+		$scope.verify =function()  {
+		
+						$scope.message1=""
+						$scope.message2=""
+						$scope.message3=""
+						$scope.message4=""
+						$scope.message5=""
+						$scope.message6=""
+		
+						exists= false
+	
+						$http({method: 'GET',
+						url : "/db/get/person"
+						}).success(function(data, status) {  
+                                    //$scope.emailInDataBase = data.email;
+							
+							for(x in data){
+								if(data[x].email == $scope.email){
+								console.log("USER HERE")
+								$scope.message1="Correo Electronico ya existe*"
+								//break;
+								exists =true
+								}
+								}
+							if(exists == false){
+							console.log("no existe")
+								
+								if(!$scope.password){
+								$scope.message2="Inserte contraseña*"	
+								}
+								else if(!$scope.confirmPassword){
+								$scope.message3="Confirme contraseña*"
+								}
+								else if($scope.password != $scope.confirmPassword){
+								$scope.message3="Contraseña y confirmación deben ser iguales*"
+								}
+								else if(!$scope.secretQuestion){
+								$scope.message4="Elija una pregunta secreta*"
+								}
+								else if(!$scope.secretAnswer){
+								$scope.message5="Provea una respuesta para la pregunta secreta*"
+								}
+								else if(!$scope.city){
+								$scope.message6="Inserte una ciudad o pueblo*"
+								}
+								else{
+								if(!$scope.organization){
+								$scope.organization = "not provided"
+								}
+								$scope.register()
+								}
+								
+							}
+		
+							
+						});	
+	
+	
+	
+	}
 
     $scope.register = function() {
 						console.log('inside register fn');
 						console.log($scope.secretQuestion);
+						
 
                         $http({method: 'GET',
 						url : "/db/insert/person/"+$scope.email+"/"+
@@ -71,31 +137,42 @@ app.controller('formCtrl', function($scope, $http, $window) {
 						$scope.secretQuestion+"/"+
 						$scope.secretAnswer+""
 						}).success(function(data, status) {  
-                                    $scope.dataset = data;
+                                    $scope.dataset = data;	
+					
                             }).
                         error(function(data, status) {
                           $scope.dataset = data || "Request failed "; 
 						  console.log(dataset);
                       }); 	
 					  
-					  
-					  
+					  $scope.getid();
+    };
+
+    $scope.getid= function() {
+						console.log('inside getid fn');
+						console.log($scope.secretQuestion);
+
 					    $http({method: 'GET',
 						url : "/db/get/person/"+$scope.email+""
 						}).success(function(data, status) {  
                                     $scope.dataset = data;
-									$scope.personid = data.personid;
-									console.log($scope.personid +"   OH YES!")
+									$scope.personid = data[0].personid;
+									$scope.send();
+									//console.log($scope.personid +"   OH YES!")
                             }).
                         error(function(data, status) {
                           $scope.dataset = data || "Request failed "; 
 						  //console.log(dataset);
-						  //console.log("dataset"+$scope.dataset[0])
-                      }); 
-					  
-						//console.log($scope.personid)
+                      }); 					  
 
-					    $http({method: 'GET',
+    };
+	
+	
+	    $scope.send = function() {
+						console.log('inside send fn');
+						console.log($scope.personid+" HEREEEEEEEEEEEEEEEEE");
+
+ 					    $http({method: 'GET',
 						url : "/db/insert/users/"+$scope.personid+"/"+ //undefined
 						$scope.organization+"/"+
 						$scope.city+""
@@ -105,9 +182,11 @@ app.controller('formCtrl', function($scope, $http, $window) {
                         error(function(data, status) {
                           $scope.dataset = data || "Request failed "; 
 						  console.log(dataset);
-                      }); 					  
-		
+                      });						
+				  
+
     };
+	
 });
 </script>
 
