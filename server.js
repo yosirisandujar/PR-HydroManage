@@ -13,8 +13,48 @@ app.listen(app.get('port'), function () {
 });
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/register.html'));
+    res.sendFile(path.join(__dirname + '/homepage.html'));
 	console.log("path success");
+});
+
+app.get('/to/register', function(req, res) {
+    res.sendFile(path.join(__dirname + '/register.html'));
+	console.log("path success to register");
+});
+
+app.get('/to/signin', function(req, res) {
+    res.sendFile(path.join(__dirname + '/signIn.html'));
+	console.log("path success to signin");
+});
+
+app.get('/to/forgotpassword', function(req, res) {
+    res.sendFile(path.join(__dirname + '/forgotPassword.html'));
+	console.log("path success to forgot password");
+});
+
+app.get('/to/homepage', function(req, res) {
+    res.sendFile(path.join(__dirname + '/homepage.html'));
+	console.log("path success to homepage");
+});
+
+app.get('/to/rivers', function(req, res) {
+    res.sendFile(path.join(__dirname + '/riversMain.html'));
+	console.log("path success to homepage");
+});
+
+app.get('/to/waterReservoirs', function(req, res) {
+    res.sendFile(path.join(__dirname + '/waterReservoirsMain.html'));
+	console.log("path success to homepage");
+});
+
+app.get('/to/aquifers', function(req, res) {
+    res.sendFile(path.join(__dirname + '/aquifersMain.html'));
+	console.log("path success to homepage");
+});
+
+app.get('/to/reservesAndShelters', function(req, res) {
+    res.sendFile(path.join(__dirname + '/reservesAndSheltersMain.html'));
+	console.log("path success to homepage");
 });
 
 /*var config = {
@@ -38,6 +78,38 @@ function clientConnect(){
 
 clientConnect();
 
+var nodemailer = require('nodemailer');
+
+// create reusable transporter object using the default SMTP transport
+var transporter = nodemailer.createTransport({
+	service: 'Gmail',
+	auth: {
+		user: 'prhydromanage1@gmail.com',
+		pass:'neonaturecode'
+	}
+});
+
+app.get('/mailer/:email/:emailConfirmationNumber',function(req,res){
+	// setup e-mail data with unicode symbols
+	var mailOptions = {
+	    from: 'prhydromanage1@gmail.com', // sender address
+	    to: req.params.email, // list of receivers
+	    subject: 'PR HydroManage Confirmacion',
+	    text: 'Gracias por registrarse con PR HydroManage\n'+ // plain text body
+		'su numero de confirmacion es: '+req.params.emailConfirmationNumber+
+		'por favor verifique su cuenta ingresando dicho numero y su correo electronico'+
+	    'Siga el siguiente enlace para verificar: xxxx ', 
+		//html: '<b>Hello world ?</b>' // html body
+	};
+
+	// send mail with defined transport object
+	transporter.sendMail(mailOptions, function(error, info){
+	    if(error){
+	        return console.log(error);
+	    }
+	    console.log('Message sent: ' + info.response);
+	});
+})
 
 //Include libraries
 var request = require("request"),
@@ -64,9 +136,20 @@ request(url, function (error, response, body) {
 }); 
 })
 
-app.get('/db/get/users', function (req,res) {
+app.get('/db/get/person', function (req,res) {
 	//clientConnect();
 	query = client.query("select * from person;"); 
+   	query.on("end", function (result) {          
+   		//client.end(); 
+		res.writeHead(200, {'Content-Type': 'text/plain'});
+		res.write(JSON.stringify(result.rows));
+		res.end();  
+	});
+})
+
+app.get('/db/get/person/:email', function (req,res) {
+	//clientConnect();
+	query = client.query("select * from person where email='"+req.params.email+"';"); 
    	query.on("end", function (result) {          
    		//client.end(); 
 		res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -81,6 +164,22 @@ app.get('/db/insert/person/:email/:password/:secretQuestion/:secretAnswer', func
 		INSERT INTO person(email, password, secretQuestion, secretAnswer)\
 		VALUES ('"+req.params.email+"','"+req.params.password+"'\
 		,'"+req.params.secretQuestion+"','"+req.params.secretAnswer+"')\
+	");    
+   	query.on("end", function (result) {          
+   		//client.end(); 
+		res.writeHead(200, {'Content-Type': 'text/plain'});
+		res.status(200).write(JSON.stringify(result.rows, null, "    "));
+		res.end();  
+	});
+})
+
+//underconstruction
+app.get('/db/insert/users/:personid/:organization/:city/:emailConfirmationNumber', function(req,res){
+	//clientConnect();
+	query = client.query("\
+		INSERT INTO users(personid, organization, city, emailConfirmationNumber)\
+		VALUES ('"+req.params.personid+"','"+req.params.organization+"'\
+		,'"+req.params.city+"','"+req.params.emailConfirmationNumber+"')\
 	");    
    	query.on("end", function (result) {          
    		//client.end(); 

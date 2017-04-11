@@ -22,14 +22,19 @@ background-color: #F2F2F2;
 }
 </style>
 </head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> <!--home button library-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <!--home button link-->
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="server.js"></script>
 <body>
 
+<p><button style="height:40px;width:40px;background-color:#1E90FF;color:white" type="button" onclick="window.location.href='/to/homepage'"><i class="material-icons">home</i></button></p>
+
 <div ng-app="myApp" ng-controller="formCtrl">
   <form novalidate>
     Correo electronico: <font color="red">* {{message1}}</font><br>
-    <input type="text" ng-model="email"><br>
+    <input type="email" ng-model="email" placeholder="example@domain.com"><br>
     Contraseña: <font color="red">* {{message2}}</font><br>
     <input type="text" ng-model="password"><br>
 	Confirmar contraseña: <font color="red">* {{message3}}</font><br>
@@ -81,42 +86,48 @@ app.controller('formCtrl', function($scope, $http, $window) {
 						}).success(function(data, status) {  
                                     //$scope.emailInDataBase = data.email;
 							
-							for(x in data){
-								if(data[x].email == $scope.email){
-								console.log("USER HERE")
-								$scope.message1="Correo Electronico ya existe*"
-								//break;
-								exists =true
+								if(!$scope.email){
+								$scope.message1="Inserte correo electronico o utilice formato correcto*"	
 								}
-								}
+								
+								else{
+									for(x in data){
+										if(data[x].email == $scope.email){
+										console.log("USER HERE")
+										$scope.message1="Correo Electronico ya existe*"
+										//break;
+										exists =true
+										}
+										}
 							if(exists == false){
 							console.log("no existe")
 								
-								if(!$scope.password){
-								$scope.message2="Inserte contraseña*"	
-								}
-								else if(!$scope.confirmPassword){
-								$scope.message3="Confirme contraseña*"
-								}
-								else if($scope.password != $scope.confirmPassword){
-								$scope.message3="Contraseña y confirmación deben ser iguales*"
-								}
-								else if(!$scope.secretQuestion){
-								$scope.message4="Elija una pregunta secreta*"
-								}
-								else if(!$scope.secretAnswer){
-								$scope.message5="Provea una respuesta para la pregunta secreta*"
-								}
-								else if(!$scope.city){
-								$scope.message6="Inserte una ciudad o pueblo*"
-								}
-								else{
-								if(!$scope.organization){
-								$scope.organization = "not provided"
-								}
-								$scope.register()
-								}
+									if(!$scope.password){
+									$scope.message2="Inserte contraseña*"	
+									}
+									else if(!$scope.confirmPassword){
+									$scope.message3="Confirme contraseña*"
+									}
+									else if($scope.password != $scope.confirmPassword){
+									$scope.message3="Contraseña y confirmación deben ser iguales*"
+									}
+									else if(!$scope.secretQuestion){
+									$scope.message4="Elija una pregunta secreta*"
+									}
+									else if(!$scope.secretAnswer){
+									$scope.message5="Provea una respuesta para la pregunta secreta*"
+									}
+									else if(!$scope.city){
+									$scope.message6="Inserte una ciudad o pueblo*"
+									}
+									else{
+									if(!$scope.organization){
+									$scope.organization = "not provided"
+									}
+									$scope.register()
+									}
 								
+							}
 							}
 		
 							
@@ -171,21 +182,47 @@ app.controller('formCtrl', function($scope, $http, $window) {
 	    $scope.send = function() {
 						console.log('inside send fn');
 						console.log($scope.personid+" HEREEEEEEEEEEEEEEEEE");
-
+						
+						$scope.emailConfirmationNumber = Math.floor((Math.random() * 999999) + 100001);
+						console.log($scope.emailConfirmationNumber)
+						
  					    $http({method: 'GET',
 						url : "/db/insert/users/"+$scope.personid+"/"+ //undefined
 						$scope.organization+"/"+
-						$scope.city+""
+						$scope.city+"/"+
+						$scope.emailConfirmationNumber+""
 						}).success(function(data, status) {  
                                     $scope.dataset = data;
+									$scope.mail()
                             }).
                         error(function(data, status) {
                           $scope.dataset = data || "Request failed "; 
 						  console.log(dataset);
-                      });						
-				  
+                      });
+					  
+					//under construction
+					//$scope.random = Math.floor((Math.random() * 999999) + 100001);
+					//console.log($scope.random)
 
     };
+	
+		$scope.mail = function() {
+					console.log('inside mailing fn');					
+					
+					$http({method: 'GET',
+					url : "/mailer/"+$scope.email+"/"+ 
+					$scope.emailConfirmationNumber+""
+					}).success(function(data, status) {  
+								$scope.dataset = data;
+						}).
+					error(function(data, status) {
+					  $scope.dataset = data || "Request failed "; 
+					  console.log(dataset);
+				  });
+				  
+    };
+	
+	
 	
 });
 </script>
