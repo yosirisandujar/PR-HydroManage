@@ -213,13 +213,14 @@ app.controller('formCtrl', function($scope, $http, $window) {
 					url : "/mailer/"+$scope.email+"/"+ 
 					$scope.emailConfirmationNumber+""
 					}).success(function(data, status) {  
-								$scope.dataset = data;
+								//$scope.dataset = data;
+								//window.location.pathname = "/to/thankyou";
 						}).
 					error(function(data, status) {
 					  $scope.dataset = data || "Request failed "; 
 					  console.log(dataset);
 				  });
-				  
+				  window.location.pathname = "/to/thankyou";
     };
 	
 	

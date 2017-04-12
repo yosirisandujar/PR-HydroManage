@@ -35,9 +35,9 @@ background-color: #F2F2F2;
 <div ng-app="myApp" ng-controller="signInCtrl">
   
   <form novalidate>
-    Email:<br>
-    <input type="text" ng-model="email"><br>
-    Password:<br>
+    Correo electronico:<br>
+    <input type="email" ng-model="email"><br>
+    Contraseña:<br>
     <input type="password" ng-model="password"><br>
 	<font color="red">{{message}}</font>
     <br><br>
@@ -54,7 +54,8 @@ app.controller('signInCtrl', function($scope, $http, $window) {
 $scope.message=""
 
 	$scope.verify =function()  {
-	
+						
+						exists= false
 	
 							$http({method: 'GET',
 						url : "/db/get/person"
@@ -63,13 +64,16 @@ $scope.message=""
 							for(x in data){
 								if(data[x].email == $scope.email){
 								console.log("USER HERE")
+								exists=true
 								$scope.signIn()
 								}
 								else{
 								console.log("USER NOT HERE")
-								$scope.message="Correo Electronico no existe*"
-								
+								//$scope.message="Correo Electronico no existe*"
 								}
+							}
+							if(exists == false){
+							$scope.message="Correo Electronico no existe*"
 							}
 								});	
 	
