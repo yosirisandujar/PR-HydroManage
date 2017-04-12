@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<style>
+.div2{
+background-color: #D6DBDF;
+margin: 2%
+}
+div {
+    border: none;
+	padding:10px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    margin-right: 20%;
+    margin-left: 20%;
+    background-color: #F7F7F7;
+}
+body{
+background-color: #F2F2F2;
+}
+</style>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="server.js"></script>
+<script src="controllers.js"></script>
+
+<body ng-app="myApp" ng-controller="homeCtrl">
+<div class="div2">
+
+<div><h1 color="blue"><center><font color="1E90FF" size="40%" >Puerto Rico HydroManage</font></center></h1></div>
+</div>
+
+<h3 color="blue"><center><font color="black" size="15%" >Iniciar Sesion</font></center></h3>
+<br><center>
+<button style="height:50px;width:10%;background-color:gray;color:white" type="button"onclick="window.location.href='/C:/Users/Nataina/Downloads/prHydroManage/dashboard.html'"><h3>Regresar</h3></button>
+
+<center>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> <!--home button library-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <!--home button link-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="server.js"></script>
+<script src="controllers.js"></script>
+
+<body >
+
+<p><button style="height:40px;width:40px;background-color:#1E90FF;color:white" type="button" onclick="window.location.href='/to/homepage'"><i class="material-icons">home</i></button></p>
+
+<div ng-app="myApp" ng-controller="signInCtrl">
+  
+  <form novalidate>
+    Email:<br>
+    <input type="text" ng-model="email"><br>
+    Password:<br>
+    <input type="password" ng-model="password"><br>
+	<!-- <font color="red">{{message}}</font> -->
+    <br><br>
+	<a href="/to/forgotpassword">Olvido su contrasena?</a>
+	<br><br>
+    <button style="height:30px;width:24%;background-color:#1E90FF;color:white" type="submit" ng-click="verify()">Entrar</button>
+  </form>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('signInCtrl', function($scope, $http, $window) {
+$scope.message=""
+	$scope.verify =function()  {
+	
+	
+							$http({method: 'GET',
+						url : "/db/get/person"
+						}).success(function(data, status) {  
+                                    //$scope.emailInDataBase = data.email;
+							for(x in data){
+								if(data[x].email == $scope.email){
+								console.log("USER HERE")
+								$scope.signIn()
+								}
+								else{
+								console.log("USER NOT HERE")
+								$scope.message="Correo Electronico no existe*"
+								
+								}
+							}
+								});	
+	
+	
+	
+	}
+    $scope.signIn = function() {
+						console.log('inside register fn');
+						console.log($scope.email);
+                        $http({method: 'GET',
+						url : "/db/get/person/"+$scope.email+""
+						}).success(function(data, status) {  
+                                    $scope.dataset = data;
+							
+									//console.log(data[0].personid)
+									
+									$scope.userInSystemEmail=data[0].email; //
+									$scope.userInSystemPassword=data[0].password; //
+									console.log("user from get "+$scope.userInSystemPassword) //
+								
+					if(!$scope.password){
+						$scope.message="Inserte Contraseña*"
+					}
+					else if($scope.password!=$scope.userInSystemPassword)//
+					  {
+						$scope.message="Contraseña Incorrecta*";
+						console.log("password not the same")
+					  }
+					  
+					else{
+						$scope.message=""
+					}
+                            }).
+                        error(function(data, status) {
+                          $scope.dataset = data || "Request failed "; 
+						  console.log(dataset);
+                      });
+					  
+		
+    };
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="server.js"></script>
+<!-- <script src="controllers.js"></script>-->
+<body>
+
+<div ng-app="myApp" ng-controller="formCtrl">
+  <form novalidate>
+    Email:<br>
+    <input type="text" ng-model="email"><br>
+    Password:<br>
+    <input type="text" ng-model="password"><br>
+	Confirm Password:<br>
+    <input type="text" ng-model="confirmPassword"><br>
+	Secret Question:<br>
+    <!--<input type="integer" ng-model="secretQuestion"><br>-->
+	<select ng-model="secretQuestion">
+    <option value="1" selected>Nombre de la primer mascota.</option>
+    <option value="2">Nombre de la ciudad donde nació.</option>
+    <option value="3">Marca de su primer vehículo.</option>
+    <option value="4">Color preferido.</option>
+    <option value="5">Comida preferida.</option>
+    <option value="6">Segundo apellido de su madre.</option>
+	</select><br> 
+	Secret Answer:<br>
+    <input type="text" ng-model="secretAnswer"><br>
+    <br><br>
+    <button type="submit" ng-click="register()">Register</button>
+  </form>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('formCtrl', function($scope, $http) {
+
+
+    $scope.register = function() {
+						console.log('inside register fn');
+						console.log($scope.secretQuestion);
+
+                        $http({method: 'GET',
+						url : "/db/insert/person/"+$scope.email+"/"+
+						$scope.password+"/"+
+						$scope.secretQuestion+"/"+
+						$scope.secretAnswer+""
+						}).success(function(data, status) {  
+                                    $scope.dataset = data;
+                            }).
+                        error(function(data, status) {
+                          $scope.dataset = data || "Request failed "; 
+						  console.log(dataset);
+                      }); 	
+		
+    };
+});
+</script>
+
+</body>
+</html>
