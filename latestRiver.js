@@ -15,21 +15,16 @@ var rivers = ["50092000","50100450","50106100","50110900","50112500","50113800",
 var array_river_url = new Array();
 var temp_URL = "";
 var daily_rivers = {};
-var daily_results = {
-	  rivers:
-	  {
-		  
-	  }
-  }
+var daily_results = {  "0": {}, "1": {}, "2": {}, "3": {}, "4": {}, "5": {}, "6": {}, "7": {}, "8": {}, "9": {}, "10": {}, "11": {}, "12": {}, "13": {}, "14": {}, "15": {}, "16": {}, 
+						"17": {}, "18": {}, "19": {}, "20": {}, "21": {}, "22": {}, "23": {}, "24": {}, "25": {}, "26": {}, "27": {}, "28": {}, "29": {}, "30": {}, "31": {}, "32": {},
+						"33": {}, "34": {}, "35": {}, "36": {}  };
 
 for(var i = 0; i < rivers.length; i++){
 			temp_URL = "http://waterservices.usgs.gov/nwis/iv/?format=json&indent=on&sites=" + rivers[i] + "&startDT=" + util.getYesterday() + "T00:00-0400&endDT=" + util.getYesterday() + "T23:55-0400&parameterCd=00060&siteType=ST&siteStatus=all";
 			array_river_url.push(temp_URL);	  
 	  }
   
-var siteno = "Site No";
-var datef = "Date";
-var valuef = "Value";
+var cont = 36;
   
 //Request function which loads the HTML body from the URL
 
@@ -64,32 +59,19 @@ for(var z = 0; z < array_river_url.length; z++){
 			}
 			else {
 				average_value = value_sum/array_values.length;
-				}
+				}			
 			
+			daily_results[cont.toString()] = {
+				'siteno' : siteNumber,
+				'value' : average_value.toFixed(2),
+				'datef' : util.getYesterday()
+			};
 			
-			//daily_results.rivers[siteno] = siteNumber;
-			//daily_results.rivers[valuef] = average_value.toFixed(2);
-			//daily_results.rivers[datef] = util.getYesterday();
-			var str_final_daily = Object.keys(daily_results.rivers);
-			daily_results.rivers[siteNumber] = average_value.toFixed(2);
-			
-			//if(str_final_daily.length == 37){
-			//	console.log(daily_results);
-			//}
-			
-			//var obj = JSON.parse(daily_results);
-			//Object.keys(obj);
-			if(str_final_daily.length == 0){
-				var obj = util.getValues(daily_results,'river');
+			if(cont == 0){
+				console.log(daily_results);
+				
 			}			
-			
-			obj.push({siteno : siteNumber, valuef : average_value.toFixed(2), datef : util.getYesterday()});
-			//var almost = JSON.stringify(obj)
-			
-			console.log(obj);
-			
-			
-			
+			cont--;			
 			
   } else {
     console.log("We’ve encountered an error: " + error);
