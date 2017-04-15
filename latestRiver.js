@@ -27,7 +27,9 @@ for(var i = 0; i < rivers.length; i++){
 			array_river_url.push(temp_URL);	  
 	  }
   
-
+var siteno = "Site No";
+var datef = "Date";
+var valuef = "Value";
   
 //Request function which loads the HTML body from the URL
 
@@ -64,11 +66,27 @@ for(var z = 0; z < array_river_url.length; z++){
 				average_value = value_sum/array_values.length;
 				}
 			
-			daily_results.rivers[siteNumber] = average_value.toFixed(2);
+			
+			//daily_results.rivers[siteno] = siteNumber;
+			//daily_results.rivers[valuef] = average_value.toFixed(2);
+			//daily_results.rivers[datef] = util.getYesterday();
 			var str_final_daily = Object.keys(daily_results.rivers);
-			if(str_final_daily.length == 37){
-				console.log(daily_results);
-			}
+			daily_results.rivers[siteNumber] = average_value.toFixed(2);
+			
+			//if(str_final_daily.length == 37){
+			//	console.log(daily_results);
+			//}
+			
+			//var obj = JSON.parse(daily_results);
+			//Object.keys(obj);
+			if(str_final_daily.length == 0){
+				var obj = util.getValues(daily_results,'river');
+			}			
+			
+			obj.push({siteno : siteNumber, valuef : average_value.toFixed(2), datef : util.getYesterday()});
+			//var almost = JSON.stringify(obj)
+			
+			console.log(obj);
 			
 			
 			
