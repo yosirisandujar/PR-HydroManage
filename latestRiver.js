@@ -5,19 +5,20 @@
 
 var request = require("request");
 var cheerio = require("cheerio");
+var unirest = require('unirest');
+var schedule = require('node-schedule');
 var util = require("./util.js");
 
+
+var exports = module.exports = {};
 //List of rivers by site number
 var rivers = ["50092000","50100450","50106100","50110900","50112500","50113800","50124200","50138000","50136400","50144000","50147800","50014800","50028000","50025155","50038100",
 				"50035000","50034000","50039500","50043800","50047850","50049100","50058350","50055225","50055000","50053025","50051800","50051310","50057000","50061800","50064200",
 				"50063800","50065500","50067000","50071000","50075000","50081000","50090500"]; 
 		
 var array_river_url = new Array();
-var temp_URL = "";
-var daily_rivers = {};
-var daily_results = {  "0": {}, "1": {}, "2": {}, "3": {}, "4": {}, "5": {}, "6": {}, "7": {}, "8": {}, "9": {}, "10": {}, "11": {}, "12": {}, "13": {}, "14": {}, "15": {}, "16": {}, 
-						"17": {}, "18": {}, "19": {}, "20": {}, "21": {}, "22": {}, "23": {}, "24": {}, "25": {}, "26": {}, "27": {}, "28": {}, "29": {}, "30": {}, "31": {}, "32": {},
-						"33": {}, "34": {}, "35": {}, "36": {}  };
+var temp_URL = "";						
+daily_urls = new Array(37);
 
 for(var i = 0; i < rivers.length; i++){
 			temp_URL = "http://waterservices.usgs.gov/nwis/iv/?format=json&indent=on&sites=" + rivers[i] + "&startDT=" + util.getYesterday() + "T00:00-0400&endDT=" + util.getYesterday() + "T23:55-0400&parameterCd=00060&siteType=ST&siteStatus=all";
@@ -25,10 +26,9 @@ for(var i = 0; i < rivers.length; i++){
 	  }
   
 var cont = 36;
-  
-//Request function which loads the HTML body from the URL
 
-
+function riverget(out, callback){
+	
 for(var z = 0; z < array_river_url.length; z++){
 	request(array_river_url[z], function (error, response, body) {
 	if (!error) {
@@ -61,16 +61,15 @@ for(var z = 0; z < array_river_url.length; z++){
 				average_value = value_sum/array_values.length;
 				}			
 			
-			daily_results[cont.toString()] = {
-				'siteno' : siteNumber,
-				'value' : average_value.toFixed(2),
-				'datef' : util.getYesterday()
-			};
+			daily_urls[cont] = "https://prhydromanage.herokuapp.com/db/insert/river/information/"+ siteNumber + "/'" + util.getYesterday() +"'/" + average_value.toFixed(2).toString();
+			//daily_urls[cont] = "http://localhost:5000/db/insert/river/information/"+ siteNumber + "/'" + util.getYesterday() +"'/" + average_value.toFixed(2).toString();	
 			
 			if(cont == 0){
-				console.log(daily_results);
-				
-			}			
+				//console.log(daily_urls);
+				out = daily_urls;
+				return callback(out);
+			}
+			
 			cont--;			
 			
   } else {
@@ -78,8 +77,36 @@ for(var z = 0; z < array_river_url.length; z++){
   }
 });
 }
+}
 
 
+function executeRiver(){
+	var fetched_rivers = new Array();
+	riverget(fetched_rivers, function(val){
+		var newval = val;
+		for(var n = 0; n < newval.length; n++){
+				var req = request(newval[n], function (error, response) {
+				if (!error) { 
+					console.log(response.body);
+				} else {
+					console.log("We’ve encountered an error: " + error);
+					}
+				});
+		}	
+	});
+}
+
+var k = schedule.scheduleJob('38 11 * * *', function(){
+	executeRiver();	
+	
+	var req = request("https://prhydromanage.herokuapp.com/db/update/calendardays", function (error, response) {
+	if (!error) { 
+		console.log(response.body);
+	} else {
+		console.log("We’ve encountered an error: " + error);
+	}});
+});
+ 
 
 
 

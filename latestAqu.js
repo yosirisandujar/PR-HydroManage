@@ -5,28 +5,27 @@
 
 var request = require("request");
 var cheerio = require("cheerio");
+var unirest = require('unirest');
+var schedule = require('node-schedule');
 var util = require("./util.js");
 
 //List of reservoirs by site number				
 	
-	var aquifers = ["182639066385200", "181352066025300", "182515065594100", "182133066342800", "180122066560300", "175858066100200", "180052066471000", "182637066475900", "180057066311300",
-				"182224065430300", "182549066304300", "181301067081900", "181217065453000", "175934066364800", "175947066130601", "175734066233300", "182515066194000", "182647066201700", 
-				"180559065280501"]; 
-	var daily_results = {  "0": {}, "1": {}, "2": {}, "3": {}, "4": {}, "5": {}, "6": {}, "7": {}, "8": {}, "9": {}, "10": {}, "11": {}, "12": {}, "13": {}, "14": {}, "15": {}, "16": {}, 
-						"17": {}, "18": {}  };
-				
-
+	var aquifers = ["180057066311300",  "175934066364800", "175947066130601", "175734066233300"]; 				
+	var daily_urls = new Array();
   var array_aquifers_url = new Array();
   var temp_URL = "";
-  var daily_aquifers = {};
   for(var i = 0; i < aquifers.length; i++){
 			temp_URL = "http://waterservices.usgs.gov/nwis/iv/?format=json&indent=on&sites=" + aquifers[i] + "&startDT=" + util.getYesterday() + "T00:00-0400&endDT=" + util.getYesterday() + "T00:05-0400&parameterCd=72019&siteType=GW&siteStatus=all";
 			array_aquifers_url.push(temp_URL);	  
 	  }
 
-var cont = 18;
+var cont = 3;
   
 //Request function which loads the HTML body from the URL
+
+function aquiferget(out, callback){
+
 for(var z = 0; z < array_aquifers_url.length; z++){
 	request(array_aquifers_url[z], function (error, response, body) {
 	if (!error) {
@@ -42,16 +41,13 @@ for(var z = 0; z < array_aquifers_url.length; z++){
 		if(isNaN(instant_value) == true){
 			instant_value = 0;
 		}
-		
-		daily_results[cont.toString()] = {
-				'siteno' : siteNumber,
-				'value' : instant_value,
-				'datef' : util.getYesterday()
-			};
+			
+			daily_urls[cont] = "https://prhydromanage.herokuapp.com/db/insert/aquifer/information/"+ siteNumber + "/'" + util.getYesterday() +"'/" + instant_value.toFixed(2).toString();
 			
 			if(cont == 0){
-				console.log(daily_results);
 				
+				out = daily_urls;
+				return callback(out);
 			}			
 			cont--;
 
@@ -61,6 +57,32 @@ for(var z = 0; z < array_aquifers_url.length; z++){
   }
 });
 }
+}
+
+
+function executeAquifer(){
+	var fetched_aquifers = new Array();
+	aquiferget(fetched_aquifers, function(val){
+		var newval = val;
+		for(var n = 0; n < newval.length; n++){
+			var req = request(newval[n], function (error, response) {
+				if (!error) { 
+					console.log(response.body);
+				} else {
+					console.log("We’ve encountered an error: " + error);
+					}
+});}});}
 
 
 
+
+var q = schedule.scheduleJob('10 1 * * *', function(){
+	executeAquifer();	
+	
+	var req = request("https://prhydromanage.herokuapp.com/db/update/calendardays", function (error, response) {
+	if (!error) { 
+		console.log(response.body);
+	} else {
+		console.log("We’ve encountered an error: " + error);
+	}});
+});		
