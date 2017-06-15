@@ -98,15 +98,7 @@ function executeReservoir(){
 
 
 //This is the node-schedule function that is executed at the time specified by the function
-//It also includes a request that calls a route in the server that updates the calendar day of the river values
 var j = schedule.scheduleJob('5 1 * * *', function(){
 	executeReservoir();	
-	/*var calendar_req = request.put("https://prhydromanage.herokuapp.com/db/update/calendardays", function (error, response) {
-		if (!error) { 
-			console.log(response.body);
-		} else {
-			console.log("We’ve encountered an error: " + error);
-		}
-	});*/
 });
 

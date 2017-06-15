@@ -24,6 +24,7 @@ var temp_URL_6monthAVG = "";
 var temp_URL_9monthAVG = "";
 var temp_URL_1yearAVG = "";
 
+//Url generator
 for(var i = 0; i < rivers.length; i++){
 			
 			//console.log(util.getYesterday());
@@ -54,7 +55,7 @@ for(var i = 0; i < rivers.length; i++){
 function executeRiverAVG(){
 	for(var n = 0; n < avg_river_url.length; n++){
 		//console.log(avg_river_url[n]);
-		var req = request.put(avg_river_url[n], function (error, response) {
+		var req_avg = request.put(avg_river_url[n], function (error, response) {
 				if (!error) { 
 					console.log(response.body);
 				} else {
@@ -64,10 +65,10 @@ function executeRiverAVG(){
 	}	
 }; 
 
-//var v = schedule.scheduleJob('51 11 * * *', function(){
+var v = schedule.scheduleJob('30 1 * * *', function(){
 	executeRiverAVG();
 	
-//});
+});
 
 
 

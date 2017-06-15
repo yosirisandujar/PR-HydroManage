@@ -26,7 +26,7 @@ var temp_URL_1yearPER = "";
 
 						
 
-
+//Url generator
 for(var i = 0; i < rivers.length; i++){
 			
 			/*var temp_URL_1monthPER = "http://localhost:3000/db/insert/river/1monthPer/" + rivers[i] + "/" + util.getYesterday();

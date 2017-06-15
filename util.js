@@ -1,3 +1,8 @@
+//Utility Functions
+//Function that retrieves the date of the day before today
+//Function that gets the values of a specified key in a JSON file
+
+
 var exports = module.exports = {};
 
 
